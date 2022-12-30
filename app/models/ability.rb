@@ -24,6 +24,7 @@ class Ability
     can :create, [Question, Answer, Comment]
     can :update, [Question, Answer, Comment], author: user
     can :destroy, [Question, Answer, Comment], author: user
+    can :subscribe, Question
     can :like, Answer
   end
 end

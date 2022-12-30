@@ -23,6 +23,7 @@ class QuestionsController < ApplicationController
   def create
     @question = current_user.questions.new(question_params)
     if @question.save
+      current_user.subscribed_questions << @question
       redirect_to question_path(@question)
     else
       render :new
@@ -59,6 +60,14 @@ class QuestionsController < ApplicationController
       redirect_to root_path, notice: "Question was successfully deleted."
     else
       redirect_to question_path(@question), alert: "Access denied! Only author can delete it!"
+    end
+  end
+
+  def subscribe
+    if current_user.has_subscribtion?(@question)
+      @question.subscribers.destroy(current_user)
+    else
+      @question.subscribers << current_user
     end
   end
 

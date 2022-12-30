@@ -4,7 +4,7 @@
       <% if answer.question.best_answer == answer %>
         <%= image_tag('star-solid.svg', size: 15, style: 'width:20px') %>
       <% else %>
-        <%= link_to_if(can?(:update, answer.question), image_tag('star-regular.svg', size: 15, style: 'width:20px;  margin-right: 10px'), best_question_path(answer.question, answer_id: answer.id), method: :put) %>
+        <%= link_to_if(Ability.new(current_user).can?(:update, answer.question), image_tag('star-regular.svg', size: 15, style: 'width:20px;  margin-right: 10px'), best_question_path(answer.question, answer_id: answer.id), method: :put) %>
       <% end %>
       <%= answer.body %>
     </div>
@@ -21,7 +21,7 @@
         <% answer.files.each do |file| %>
           <p id=<%="file_#{file.id}"%>>
             <%= link_to file.filename.to_s, url_for(file) %>
-            <% if can?(:update, answer)  %> 
+            <% if Ability.new(current_user).can?(:update, answer)  %> 
               <%= link_to image_tag('trash-can-solid.svg', size: 12), answer_delete_file_path(answer, file_id: file), method: :delete, remote: true %>
             <% end %>
           </p>
@@ -34,7 +34,7 @@
         <% answer.links.each do |link| %>
           <p id=<%="link_#{link.id}" %>>
             <%= link_to link.name, link.url %>
-            <% if can?(:update, answer) %> 
+            <% if Ability.new(current_user).can?(:update, answer) %> 
               <%= link_to image_tag('trash-can-solid.svg', size: 12), link_path(link), method: :delete, remote: true %>
             <% end %>
           </p>

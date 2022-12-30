@@ -8,6 +8,7 @@
   </div>
   <div class="links">
     <%= link_to "Show (#{question.answers.count} answers)...", question_path(question) %>
+    <%= link_to current_user.has_subscribtion?(question) ? "Unsubscribe!" : "Subscribe for news!", subscribe_question_path(question), method: :put if current_user %>
     <%= button_to "Delete", question_path(question), method: :delete, class: "deleteBtn controlBtn" %>
   </div>
 </article>

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     end
     member do
       put :best
+      put :subscribe
     end
   end
 
